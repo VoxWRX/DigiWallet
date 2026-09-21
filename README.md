@@ -58,6 +58,60 @@ uv run main.py
 
 *Note: Alternatively, if you prefer using standard `pip`, you can create a virtual environment with `python -m venv venv`, activate it, install dependencies from `pyproject.toml` or `requirements.txt`, and run `python main.py`.*
 
+### 🐳 Running via Docker
+
+Because DigiWallet is a GUI application, running it in a Docker container requires connecting the container to your host machine's display server via X11 forwarding.
+
+**1. Build the image:**
+```bash
+docker build -t digiwallet .
+```
+
+**2. Run the container:**
+
+*On Linux:*
+```bash
+# Allow local X11 connections
+xhost +local:docker
+
+# Run the container with X11 forwarding and a volume for the database
+docker run -it --rm \
+    --net=host \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v ~/.digital_wallet:/root/.digital_wallet \
+    digiwallet
+```
+
+*On macOS:*
+1. Install [XQuartz](https://www.xquartz.org/).
+2. Open XQuartz > Settings > Security > Check "Allow connections from network clients".
+3. Restart your Mac.
+4. Run in your terminal:
+```bash
+# Allow connections from your local IP
+xhost + $(ipconfig getifaddr en0)
+
+# Run the container
+docker run -it --rm \
+    -e DISPLAY=$(ipconfig getifaddr en0):0 \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v ~/.digital_wallet:/root/.digital_wallet \
+    digiwallet
+```
+
+*On Windows:*
+1. Install an X Server like [VcXsrv](https://sourceforge.net/projects/vcxsrv/).
+2. Launch XLaunch. Check "Multiple windows", "Start no client", and crucially, **check "Disable access control"**.
+3. Run in PowerShell:
+```powershell
+# Replace YOUR_IP with your machine's local IPv4 address
+docker run -it --rm `
+    -e DISPLAY=YOUR_IP:0.0 `
+    -v $env:USERPROFILE\.digital_wallet:/root/.digital_wallet `
+    digiwallet
+```
+
 ---
 
 ## 📖 User Guide
