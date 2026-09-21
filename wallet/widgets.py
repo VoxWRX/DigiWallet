@@ -61,6 +61,13 @@ class Dialog(ctk.CTkToplevel):
         center(self, width, height)
         safe_grab(self)
 
+    def destroy(self):
+        try:
+            self.grab_release()
+        except Exception:
+            pass
+        super().destroy()
+
     def field_row(self, r, label, widget, widget2=None):
         self.body.grid_columnconfigure(1, weight=1)
         ctk.CTkLabel(self.body, text=label, text_color=THEME.c("muted"), anchor="e"
