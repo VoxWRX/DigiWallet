@@ -55,7 +55,6 @@ class Dialog(ctk.CTkToplevel):
         self.title(title)
         self.resizable(False, False)
         self.configure(fg_color=THEME.c("bg"))
-        self.transient(parent or app)
         self.body = card(self)
         self.body.pack(fill="both", expand=True, padx=14, pady=14)
         center(self, width, height)

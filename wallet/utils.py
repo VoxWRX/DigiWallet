@@ -51,7 +51,6 @@ def add_months(d, n):
 
 
 def center(win, w, h):
-    win.update_idletasks()
     x = (win.winfo_screenwidth() - w) // 2
     y = max(0, (win.winfo_screenheight() - h) // 3)
     win.geometry(f"{w}x{h}+{x}+{y}")
@@ -60,8 +59,8 @@ def center(win, w, h):
 def safe_grab(win):
     def _grab():
         try:
-            win.focus_force()
-            win.grab_set()
+            pass # win.focus_force()
+            pass # win.grab_set()
         except Exception:
             pass
     win.after(120, _grab)
