@@ -19,9 +19,9 @@ PAGES = {"dashboard": DashboardPage, "ledger": LedgerPage,
          "reports": ReportsPage, "settings": SettingsPage}
 
 
-class MainWindow(ctk.CTk):
-    def __init__(self, user):
-        super().__init__()
+class MainWindow(ctk.CTkToplevel):
+    def __init__(self, master, user):
+        super().__init__(master)
         self.user = user
         THEME.set(user["theme_mode"], user["theme_accent"])
         THEME.apply()

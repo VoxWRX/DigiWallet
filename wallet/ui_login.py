@@ -9,9 +9,9 @@ from .utils import center
 from .widgets import card
 
 
-class LoginApp(ctk.CTk):
-    def __init__(self):
-        super().__init__()
+class LoginApp(ctk.CTkToplevel):
+    def __init__(self, master):
+        super().__init__(master)
         self.result_user = None
         self._fails = 0
         self._locked_until = 0.0

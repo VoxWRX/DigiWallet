@@ -2,6 +2,7 @@
 from wallet import db
 from wallet.ui_login import LoginApp
 from wallet.ui_main import MainWindow
+import customtkinter as ctk
 
 
 def silent_bgerror(*args):
@@ -12,18 +13,26 @@ def silent_bgerror(*args):
 
 def main():
     db.init_db()
+    
+    root = ctk.CTk()
+    root.withdraw()
+    root.tk.createcommand("bgerror", silent_bgerror)
+    
     while True:
-        login = LoginApp()
-        login.tk.createcommand("bgerror", silent_bgerror)
-        login.mainloop()
+        login = LoginApp(root)
+        root.wait_window(login)
+        
         user = getattr(login, "result_user", None)
         if not user:
-            return  # window closed -> exit
-        win = MainWindow(user)
-        win.tk.createcommand("bgerror", silent_bgerror)
-        win.mainloop()
+            break  # window closed -> exit
+            
+        win = MainWindow(root, user)
+        root.wait_window(win)
+        
         if not getattr(win, "wants_logout", False):
-            return  # app closed -> exit, otherwise loop back to login
+            break  # app closed -> exit, otherwise loop back to login
+            
+    root.destroy()
 
 
 if __name__ == "__main__":
