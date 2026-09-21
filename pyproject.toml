@@ -1,0 +1,22 @@
+[project]
+name = "digiwallet"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "VoxWRX", email = "149512265+VoxWRX@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "customtkinter>=5.2.0",
+    "matplotlib>=3.7.0",
+    "pillow>=9.0.0",
+    "reportlab>=4.0.0",
+]
+
+[project.scripts]
+digiwallet = "digiwallet:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
