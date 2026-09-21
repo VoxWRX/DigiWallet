@@ -103,7 +103,7 @@ class LoginApp(ctk.CTk):
             mb.showerror("Sign in failed", "Invalid username or password.", parent=self)
             return
         self.result_user = user
-        self.destroy()
+        self.after(10, self.destroy)
 
     def _register_account(self):
         username = self.e_user.get().strip()
@@ -124,4 +124,4 @@ class LoginApp(ctk.CTk):
         uid = db.create_user(username, pw_hash, salt, self.e_name.get().strip() or username,
                              self.var_cur.get())
         self.result_user = db.get_user_by_id(uid)
-        self.destroy()
+        self.after(10, self.destroy)

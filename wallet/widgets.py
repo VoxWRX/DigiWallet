@@ -66,7 +66,8 @@ class Dialog(ctk.CTkToplevel):
             self.grab_release()
         except Exception:
             pass
-        super().destroy()
+        # Defer destruction to let CustomTkinter button events finish
+        self.after(10, super().destroy)
 
     def field_row(self, r, label, widget, widget2=None):
         self.body.grid_columnconfigure(1, weight=1)

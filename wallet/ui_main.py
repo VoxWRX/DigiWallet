@@ -144,4 +144,4 @@ class MainWindow(ctk.CTk):
 
     def logout(self):
         self.wants_logout = True
-        self.destroy()
+        self.after(10, self.destroy)
